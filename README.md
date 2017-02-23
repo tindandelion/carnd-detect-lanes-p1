@@ -63,18 +63,34 @@ Using the `moviepy` library, it's easy to apply the pipeline to a video
 clip. Please see the video clips `lane_solidWhiteRight.mp4` and
 `lane_solidYellowLeft.mp4` in the `videos/out` directory. 
 
+### Potential shortcomings
 
+The pipeline, as currently implemented, has the following disadvantages:
 
-###2. Identify potential shortcomings with your current pipeline
+1. The parameters for Hough transform are quite tough in order to reduce the
+false positives. As a result, they work pretty well on clear pictures, but fail
+to find the lane lines when there are interferences, like shadows or reflections
+from the road surface. 
 
+2. The pipeline doesn't take into account that there can be other signs drawn on
+the road surface, that would interfer with the detection algorithm. 
 
-One potential shortcoming would be what would happen when ... 
+3. The algorithm would not be reliable when the lanes are significantly curved
+(sharp turns).
 
-Another shortcoming could be ...
+### Possible improvements
 
+There can be several improvements to the algorithm. For individual images, I
+suggest trying to use the color data to emphasize the lane lines. We know that
+the lane lines are mostly white or yellow, and we could probably use color
+filtering to make lane lines stand out.
 
-###3. Suggest possible improvements to your pipeline
+Another improvement for individual images would be taking into account the line
+segments' lengths when calculating the average. Longer line segments should
+probably contribute more to the average than the short ones. 
 
-A possible improvement would be to ...
+When applying the algorithm to the video clips, I think we can make use of the
+historical data over the sequence of images. Averaging the lane line parameters
+over the series of past calculations can help filtering out short distortions,
+like occasional shadows, or even additional signs on the road surface.
 
-Another potential improvement could be to ...
